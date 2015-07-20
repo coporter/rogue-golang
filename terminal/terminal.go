@@ -1,41 +1,68 @@
 package terminal
 
 import (
-	"fmt"
+	//	"fmt"
 	"github.com/nsf/termbox-go"
 )
 
-type Color uint16
+type Color uint
 
 const (
-	ColorDefault = termbox.ColorDefault
-	ColorBlack   = termbox.ColorBlack
-	ColorRed     = termbox.ColorRed
-	ColorGreen   = termbox.ColorGreen
-	ColorYellow  = termbox.ColorYellow
-	ColorBlue    = termbox.ColorBlue
-	ColorMagenta = termbox.ColorMagenta
-	ColorCyan    = termbox.ColorCyan
-	ColorWhite   = termbox.ColorWhite
+	ColorDefault Color = iota
+	ColorBlack
+	ColorRed
+	ColorGreen
+	ColorYellow
+	ColorBlue
+	ColorMagenta
+	ColorCyan
+	ColorWhite
 )
 
-func Init() {
-	fmt.Println("AAAAAAAAAAAAAAAAAAAAAAAAA")
+func Open() {
 	err := termbox.Init()
 	if err != nil {
 		panic(err)
 	}
+}
+
+func Close() {
 	defer termbox.Close()
 }
 
-func PrintRune(r rune, x int, y int) {
+func getTermboxColor(c Color) termbox.Attribute {
+	switch c {
+	case ColorDefault:
+		return termbox.ColorDefault
+	case ColorBlack:
+		return termbox.ColorBlack
+	case ColorRed:
+		return termbox.ColorRed
+	case ColorGreen:
+		return termbox.ColorGreen
+	case ColorYellow:
+		return termbox.ColorYellow
+	case ColorBlue:
+		return termbox.ColorBlue
+	case ColorMagenta:
+		return termbox.ColorMagenta
+	case ColorCyan:
+		return termbox.ColorCyan
+	case ColorWhite:
+		return termbox.ColorWhite
+	default:
+		return termbox.ColorDefault
+	}
+}
+
+func PrintRune(r rune, x int, y int, fgColor Color, bgColor Color) {
 	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
-	termbox.SetCell(x, y, r, termbox.ColorDefault, termbox.ColorDefault)
+	termbox.SetCell(x, y, r, getTermboxColor(fgColor), getTermboxColor(bgColor))
 	termbox.Flush()
 }
 
-func PrintLine(str string, x int, y int) {
+func PrintLine(str string, x int, y int, fgColor Color, bgColor Color) {
 	for i := range str {
-		PrintRune(rune(str[i]), x+i, y)
+		PrintRune(rune(str[i]), x+i, y, fgColor, bgColor)
 	}
 }

@@ -2,21 +2,15 @@ package main
 
 import (
 	//	"fmt"
-	"github.com/coporter/rogue-golang/terminal"
+	t "github.com/coporter/rogue-golang/terminal"
 	//	"github.com/nsf/termbox-go"
 	"time"
 )
 
 func main() {
-	//err := termbox.Init()
-	//if err != nil {
-	//	panic(err)
-	//}
-	//defer termbox.Close()
-
-	terminal.Init()
-	terminal.PrintRune('@', 5, 5)
-	terminal.PrintLine("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz", 5, 6)
+	t.Open()
+	defer t.Close()
+	t.PrintLine("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz", 5, 6, t.ColorDefault, t.ColorGreen)
 	time.Sleep(time.Second * 2)
 }
 
